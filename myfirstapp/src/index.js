@@ -1,17 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const LogForm = () => {
+  const [name, setName] = useState('');
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+  function handleSubmit(event) {
+    event.preventDefault();
+    alert('A name was submitted: ' + name);
+  }
+
+  return (
+    <>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <label>
+          Name:
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        </label>
+
+        <input type="submit" value="Submit" />
+
+        <label>
+          Age
+          <input type="number" />
+        </label>
+        <label>
+          Location
+         <input type="text" />
+        </label>
+      </form>
+      <div>
+      </div>
+    </> 
+    );
+}
+
+ReactDOM.render(<LogForm />, document.getElementById('root'));
