@@ -1,11 +1,29 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Header from './components/Header';
+import Search from './components/Search';
 import BookList from './components/BookList';
 import data from './models/books.json';
-import Stylesheet from './components/Stylesheet';
+import styled from 'styled-components';
+import About from './pages/About.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const App = (props) => {
- const [books,setBooks] = useState(data);
+
+ const [books, setBooks] = useState(data);
+ const [keyword, setKeyword ] = useState('');
+ const [count, setCount] = useState(0);
+
+ async function findBooks(value) {
+  const results = await
+ fetch(`https://www.googleapis.com/books/v1/volumes?q=${value}&filter=paid-ebooks&print-ty
+ pe=books&projection=lite`).then(res => res.json());
+  if (!results.error) {
+  setBooks(results.items);
+  }
+ }
+
+
 
  const addBook = (title, id)  => {
    const newBookList = books.filter(book => book.id !== id);
@@ -13,11 +31,18 @@ const App = (props) => {
    console.log(`The book ${title} was clicked`)
  }
 
+ function removeBook (id) {
+   const newBookList = books.filter(book => book.id !==id);
+
+
+ }
+
  return (
    <Router>
       <Route exact path="/" render={() => (
         <React.Fragment>
-          <Header/>
+          <Header />
+          <Search findBooks={findBooks} keyword={keyword} setKeyword={setKeyword} />
           <BookList books={books} addBook={addBook} />
         </React.Fragment>
       )}/> 

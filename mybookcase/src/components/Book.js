@@ -16,10 +16,17 @@ const renderAmount = () => {
 return (
  <div>
      <img src ={thumbnail} />
+     <button onClick= {()=> props.addBook(title,id)} style ={{
+         font: 'inherit',
+         cursor: 'pointer',
+         border: '1px solid black',
+         background: 'black',
+         color: 'white',
+         padding: '0.5rem 2rem'
+     }}> Add Book</button>:
  <h2>{title}</h2>
  <p>{renderAmount()}</p>
     <p>{description}</p>
-    <button onClick= {()=> props.addBook(title,id)}> addBook</button>
  </div>
  );
 }

@@ -7,6 +7,7 @@ const Header = () => {
             <h1>My Bookcase</h1>
             <Link to="/"> Home </Link>
             <Link to="/bookcase">Bookcase</Link>
+            <Link to="/About">Bookcase</Link>
         </React.Fragment>
     )
 }
