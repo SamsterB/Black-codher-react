@@ -1,54 +1,51 @@
 import React from 'react';
-import '...App.css'
 import PropTypes from 'prop-types'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import button from 'react-bootstrap/button'
+
 
 const Book = (props) => {
-    //let { id, volumeInfo: {title, authors, description}, saleInfo: {listPrice: {amount}}} = props.book;
- const info = props.book.volumeInfo;
- //const { volumeInfo } = props.book;
+    let { id, volumeInfo: {title, authors, description, imageLinks:{thumbnail, smallThumbnail}, }, saleInfo: {listPrice}} = props.books;
 
-//const { volumeInfo: { description} } = props.book; 
-const {id, volumeInfo: {title, description, imageLinks: {thumbnail} } } = props.book;
+    const formatter = new Intl.NumberFormat("en-GB", {
+        style: "currency",
+        currency: "GBP",
+      });
 
-const renderAmount = () => {
-    if (props.book.saleInfo && props.book.saleInfo.listPrice && props.book.saleInfo.listPrice.amount) {
-        return '£' + props.book.saleInfo.listPrice.amount;
-    }
-    return;
-}  
 return (
-    <div>
-    <Container>
-    <Row classname="align-items-center justify-content-md-center book">
-        <h2 className="bookTitle">{title}</h2>
-    </Row>    
-
-    <Row className="align-items-center justify-content-md-center book">
-        <h3 className="bookAuthor">by {authors.join(",")}</h3>
-    </Row>
-
-    <Row classname="align-items-center justify-content-md-center book">
-        <Col lg="2">
-        <img src= {smallThumbnail} alt = {title}/>
-        </Col>
-        <Col lg="8">
-        <p className="bookDescription">{description}</p>   
-        </Col>
-        <Col lg="2">
-        <p className="bookprice">Retail Price: £{listPrice.amount && listprice.amount}</p>
-        {props.addBook && ( 
-            <Button variant="warning" onClick={()=>props.addBook(title,id)}>Add +</Button>
-        )}    
-        {props.removeBook && ( 
-            <Button variant="warning" onClick={()=>props.removeBook(title,id)}>Add +</Button>
-        )}    
-        </Col>
-        </Row>
-    </Container>
- );
-}
+    <div className="bookContent">
+      <h2 className="bookTitle">{title}</h2>
+      <p>
+        <img src={thumbnail || smallThumbnail} alt={title} />
+      </p>
+      <p className="bookAuthor">by {authors ? authors.join(" , ") : "No Authors"}</p>
+      <p className="bookDescription">{description}</p>
+      <p className="bookPrice">{listPrice && formatter.format(listPrice.amount)}</p>
+      {props.addBook && (
+        <button className="button" onClick={() => props.addBook(title, id)}>Add To Bookcase</button>
+      )}
+      {props.removeBook && (
+        <button className="button" onClick={() => props.removeBook(id)}>Remove From Bookcase</button>
+      )}
+    </div>
+  );
+};
+Book.propTypes = {
+  book: PropTypes.shape({
+    id: PropTypes.string,
+    volumeInfo: PropTypes.shape({
+      imageLinks: PropTypes.shape({
+        thumbnail: PropTypes.string,
+        smallThumbnail: PropTypes.string,
+      }),
+      title: PropTypes.string.isRequired,
+      authors: PropTypes.array.isRequired,
+      description: PropTypes.string,
+    }),
+    saleInfo: PropTypes.shape({
+      listPrice: PropTypes.shape({
+        amount: PropTypes.number,
+      }),
+    }),
+  }),
+};
+    
 export default Book;
