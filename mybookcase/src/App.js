@@ -4,9 +4,9 @@ import Header from './components/Header';
 import Search from './components/Search';
 import BookList from './components/BookList';
 import data from './models/books.json';
-import styled from 'styled-components';
 import About from './pages/About.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const App = (props) => {
 
@@ -29,9 +29,7 @@ const App = (props) => {
  }
 
 
-
-
- const addBook = (title, id)  => {
+ function addBook (title, id)  {
    const newBookList = books.filter(book => book.id !== id);
    const chosenBook = books.filter(book => book.id ===id);
    setBooks(newBookList);
@@ -41,7 +39,7 @@ const App = (props) => {
  }
 
  function removeBook (id) {
-   const newBookList = books.filter(book => book.id !==id);
+  const newBookcaseList = bookcase.filter(book => book.id !== id);
    setBookcase(newBookcaseList);
    setCount(count - 1);
 
@@ -51,38 +49,26 @@ const App = (props) => {
    <Router>
       <Route exact path="/" render={() => (
         <React.Fragment>
-          <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-  <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-  <Navbar.Collapse id="responsive-navbar-nav">
-    <Nav className="mr-auto">
-      <Nav.Link href="#features">Features</Nav.Link>
-      <Nav.Link href="#pricing">Pricing</Nav.Link>
-      <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-        <NavDropdown.Divider />
-        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-      </NavDropdown>
-    </Nav>
-    <Nav>
-      <Nav.Link href="#deets">More deets</Nav.Link>
-      <Nav.Link eventKey={2} href="#memes">
-        Dank memes
-      </Nav.Link>
-    </Nav>
-  </Navbar.Collapse>
-</Navbar>
           <Header />
           <Search findBooks={findBooks} keyword={keyword} setKeyword={setKeyword} />
           <BookList books={books} addBook={addBook} />
         </React.Fragment>
       )}/> 
     
+<Route exact path ="/About" render ={()=> (
+  <React.Fragment>
+  <Header/>
+  <About/>
+  </React.Fragment>
+)}
+/>
+
+
       <Route exact path="/bookcase" render ={() => (
         <React.Fragment>
           < Header/>
+          <p className="countText">{count} Book(s) Added To Bookcase</p>
+          <BookList books={bookcase} removeBook={removeBook} />
          </React.Fragment>
       )}/>
       </Router>
