@@ -7,18 +7,19 @@ import data from './models/books.json';
 import About from './pages/About.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 const App = (props) => {
 
  const [books, setBooks] = useState(data);
  const [keyword, setKeyword ] = useState('');
  const [bookcase,setBookcase] = useState([])
  const [count, setCount] = useState(0);
+ const [currentPage, setCurrentPage] = useState(1);
+ const [booksPerPage, setBooksPerPage]= useState(5);
 
  useEffect (() => {
    document.title = `${count} Book(s) Added to Bookcase`;
  });
-
+ 
  async function findBooks(value) {
   const results = await
  fetch(`https://www.googleapis.com/books/v1/volumes?q=${value}&filter=paid-ebooks&print-ty
@@ -44,6 +45,10 @@ const App = (props) => {
    setCount(count - 1);
 
  }
+
+ const indexOfLastBook = currentPage * booksPerPage;
+ const indexOfFirstBook = indexOfLastBook - booksPerPage;
+ const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
 
  return (
    <Router>
