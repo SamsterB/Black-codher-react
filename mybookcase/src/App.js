@@ -6,6 +6,8 @@ import BookList from './components/BookList';
 import data from './models/books.json';
 import About from './pages/About.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Pagination from './components/Pagination';
+
 
 const App = (props) => {
 
@@ -45,13 +47,23 @@ const App = (props) => {
    setCount(count - 1);
 
  }
-
+//get current books
  const indexOfLastBook = currentPage * booksPerPage;
  const indexOfFirstBook = indexOfLastBook - booksPerPage;
  const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
 
+ //change the page 
+ const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
  return (
    <Router>
+     <Pagination
+              activePage={currentPage}
+              itemsCountPerPage={6}
+              totalItemsCount={books.length}
+              pageRangeDisplayed={5}
+              onChange={paginate}
+            />
       <Route exact path="/" render={() => (
         <React.Fragment>
           <Header />
