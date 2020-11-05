@@ -1,11 +1,13 @@
 import React from "react";
 import {Link} from 'react-router-dom';
+import './myStyles.css'
 
-const Header = () => {
+function Header (props) {
+    let className = props.primary ? 'primary' : ''
     return (
         <React.Fragment>
         <div className='container mt-10'>
-            <h1 className="text-primary mb-3">My Bookcase</h1>
+            <h1 className={'{`$className`} font-family'}>My Bookcase</h1>
         </div>
             <Link to="/"> Home </Link>
             <Link to="/bookcase">Bookcase</Link>
