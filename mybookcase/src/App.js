@@ -7,8 +7,8 @@ import data from './models/books.json';
 import About from './pages/About.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Pagination from './components/Pagination';
-import {Navbar,Nav,NavDropdown } from 'react-bootstrap';
-
+import {Navbar,Nav,NavDropdown,Jumbotron} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 
 const App = (props) => {
 
@@ -17,7 +17,7 @@ const App = (props) => {
  const [bookcase,setBookcase] = useState([])
  const [count, setCount] = useState(0);
  const [currentPage, setCurrentPage] = useState(1);
- const [booksPerPage, setBooksPerPage]= useState(5);
+ const [booksPerPage]= useState(10);
 
  useEffect (() => {
    document.title = `${count} Book(s) Added to Bookcase`;
@@ -59,53 +59,42 @@ const App = (props) => {
  return (
    <Router>
      <div className="App">
+     <div className="Jumbotron">
      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-  <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+  <Navbar.Brand href="#home">My Bookcase</Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
     <Nav className="mr-auto">
-      <Nav.Link href="#features">Features</Nav.Link>
-      <Nav.Link href="#pricing">Pricing</Nav.Link>
-      <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-        <NavDropdown.Divider />
-        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-      </NavDropdown>
-    </Nav>
-    <Nav>
-      <Nav.Link href="#deets">More deets</Nav.Link>
-      <Nav.Link eventKey={2} href="#memes">
-        Dank memes
-      </Nav.Link>
+      <Nav.Item><Link to="/"className="nav-link"> Home </Link></Nav.Item>
+      <Nav.Item><Link to="/About"className="nav-link"> About </Link></Nav.Item>
+      <Nav.Item><Link to="/Bookcase" className="nav-link">Bookcase</Link></Nav.Item>
     </Nav>
   </Navbar.Collapse>
 </Navbar>
      </div>
-     <Pagination
-              activePage={currentPage}
-              itemsCountPerPage={6}
-              totalItemsCount={books.length}
-              pageRangeDisplayed={5}
-              onChange={paginate}
-            />
+     </div>
+     
       <Route exact path="/" render={() => (
         <React.Fragment>
           <Header />
           <Search findBooks={findBooks} keyword={keyword} setKeyword={setKeyword} />
-          <BookList books={books} addBook={addBook} />
+          <BookList books={currentBooks} addBook={addBook} />
+          <Pagination
+            booksPerPage = {booksPerPage}
+            totalBooks = {books.length}
+            paginate = {paginate}
+              
+            />
         </React.Fragment>
       )}/> 
     
-<Route exact path ="/About" render ={()=> (
+    <Route exact path ="/About" render ={()=> (
   <React.Fragment>
   <Header/>
   <About/>
   </React.Fragment>
 )}
 />
-
 
       <Route exact path="/bookcase" render ={() => (
         <React.Fragment>
