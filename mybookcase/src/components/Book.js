@@ -11,6 +11,7 @@ const Book = (props) => {
       });
 
 return (
+    <div className= "container">
     <div className="bookContent">
       <h2 className="bookTitle">{title}</h2>
       <p>
@@ -25,6 +26,7 @@ return (
       {props.removeBook && (
         <button className="button" onClick={() => props.removeBook(id)}>Remove From Bookcase</button>
       )}
+    </div>
     </div>
   );
 };

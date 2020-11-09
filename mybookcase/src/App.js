@@ -9,6 +9,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Pagination from './components/Pagination';
 import {Navbar,Nav,NavDropdown,Jumbotron} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import './App.css';
+
 
 const App = (props) => {
 
@@ -58,7 +60,9 @@ const App = (props) => {
 
  return (
    <Router>
+     <div className="myComponent">
      <div className="App">
+     <div className="NavColour">
      <div className="Jumbotron">
      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
   <Navbar.Brand href="#home">My Bookcase</Navbar.Brand>
@@ -71,6 +75,8 @@ const App = (props) => {
     </Nav>
   </Navbar.Collapse>
 </Navbar>
+     </div>
+     </div>
      </div>
      </div>
      
